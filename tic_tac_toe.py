@@ -1,3 +1,15 @@
+def playerInput():
+    player1 = input(' Player1 select from "X" or "O" to play: ').upper()
+    if player1 == 'X':
+        player2 = 'O'
+        print(' Player2 you have given "O".')
+    else:
+        player2 = 'X'
+        print(' Player2 you have given "X".')
+
+    return player1, player2
+
+
 def printBoard():
     print(
         f'''
@@ -33,8 +45,8 @@ def checkWin():
 
 
 boardStructure()    # board structure for instructions
-player1 = input(' player1 select from "X" and "O" to play:').upper()
-player2 = input(' player2 select from "X" and "O" to play:').upper()
+player1, player2 = playerInput()
+print("LET'S BEGIN!! \n")
 
 theBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
             'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ',
@@ -44,17 +56,25 @@ indexes = {7: 'top-L', 8: 'top-M', 9: 'top-R',
            1: 'low-L', 2: 'low-M', 3: 'low-R'}
 
 turn = player1
-for i in range(1, 9):
+for i in range(9):
+    print(f'Player "{turn}" turn: ')
+    pos = int(input('> '))
     while True:
-        print(f'Turn of the player who has chosen "{turn}", enter your desired position: ')
-        pos = int(input('> '))
         if pos > 1 or pos < 9:
-            if not checkPosition(indexes[pos]):
-                if turn == player1:
-                    theBoard[indexes[pos]] = player1
-                    turn = player2
-                    printBoard()
+            while i < 9:
+                if not checkPosition(indexes[pos]):
+                    if turn == player1:
+                        theBoard[indexes[pos]] = player1
+                        turn = player2
+                        printBoard()
+                        break
+                    else:
+                        theBoard[indexes[pos]] = player2
+                        turn = player1
+                        printBoard()
+                        break
                 else:
-                    theBoard[indexes[pos]] = player2
-                    turn = player1
-                    printBoard()
+                    print('Position not Empty.')
+                    break
+        else:
+            print("That's not a position.")
