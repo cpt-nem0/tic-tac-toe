@@ -10,7 +10,7 @@ def printBoard():
     )
 
 
-def boardStructure():       #reason for this structure is the convenience on the keypad
+def boardStructure():       # structure 'coz of keypad layout
     print("""
     Board Structure:
         (7)|(8)|(9)
@@ -50,7 +50,11 @@ for i in range(1, 9):
         pos = int(input('> '))
         if pos > 1 or pos < 9:
             if not checkPosition(indexes[pos]):
-                theBoard[indexes[pos]] = player1
-                turn = player2
-                printBoard()
-                break
+                if turn == player1:
+                    theBoard[indexes[pos]] = player1
+                    turn = player2
+                    printBoard()
+                else:
+                    theBoard[indexes[pos]] = player2
+                    turn = player1
+                    printBoard()
