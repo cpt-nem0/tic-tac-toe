@@ -1,2 +1,3 @@
-# tic-tac-toe
-A basic tic tac toe  program.
+# Tic Tac Toe
+
+Basic 2-player Tic-Tac-Toe game.
