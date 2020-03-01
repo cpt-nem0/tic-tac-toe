@@ -61,19 +61,23 @@ for i in range(9):
     pos = int(input('> '))
     while True:
         if pos > 1 or pos < 9:
-            if not checkPosition(indexes[pos]):     # exception when value not between 1 and 9
-                if turn == player1:
-                    theBoard[indexes[pos]] = player1
-                    turn = player2
-                    printBoard()
-                    break
+            try:
+                if not checkPosition(indexes[pos]):
+                    if turn == player1:
+                        theBoard[indexes[pos]] = player1
+                        turn = player2
+                        printBoard()
+                        break
+                    else:
+                        theBoard[indexes[pos]] = player2
+                        turn = player1
+                        printBoard()
+                        break
                 else:
-                    theBoard[indexes[pos]] = player2
-                    turn = player1
-                    printBoard()
+                    print('Position not Empty.')
                     break
-            else:
-                print('Position not Empty.')
                 break
-            break
+            except KeyError:
+                print('Pos must be between 1-9.')
+                break
 print('\n GAME HAS ENDED!!')
