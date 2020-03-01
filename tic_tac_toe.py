@@ -1,11 +1,16 @@
 def playerInput():
-    player1 = input(' Player1 select from "X" or "O" to play: ').upper()
-    if player1 == 'X':
+    while True:
+        player = input(' Player1 select from "X" or "O" to play: ').upper()
+        if player == 'X' or player == 'O':
+            break
+    if player == 'X':
+        player1 = 'X'
         player2 = 'O'
-        print(' Player2 you have given "O".')
+        print('\n Player2 you have given: "O".\n')
     else:
+        player1 = 'O'
         player2 = 'X'
-        print(' Player2 you have given "X".')
+        print('\n Player2 you have given: "X".\n')
 
     return player1, player2
 
@@ -73,9 +78,9 @@ while i < 9:
                     i += 1
                     break
                 else:
-                    print('Position not Empty.')
+                    print('\n Position not Empty.\n')
                     break
             except KeyError:
-                print('Pos must be between 1-9.')
+                print('\n Pos must be between 1-9. \n')
                 break
 print('\n GAME HAS ENDED!!')
