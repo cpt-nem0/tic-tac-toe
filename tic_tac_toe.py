@@ -46,7 +46,7 @@ def checkWin():
 
 boardStructure()    # board structure for instructions
 player1, player2 = playerInput()
-print("LET'S BEGIN!! \n")
+print("\n LET'S BEGIN!! \n")
 
 theBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
             'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ',
@@ -57,24 +57,23 @@ indexes = {7: 'top-L', 8: 'top-M', 9: 'top-R',
 
 turn = player1
 for i in range(9):
-    print(f'Player "{turn}" turn: ')
+    print(f'Player "{turn}" turn, enter your position: ')
     pos = int(input('> '))
     while True:
         if pos > 1 or pos < 9:
-            while i < 9:
-                if not checkPosition(indexes[pos]):
-                    if turn == player1:
-                        theBoard[indexes[pos]] = player1
-                        turn = player2
-                        printBoard()
-                        break
-                    else:
-                        theBoard[indexes[pos]] = player2
-                        turn = player1
-                        printBoard()
-                        break
-                else:
-                    print('Position not Empty.')
+            if not checkPosition(indexes[pos]):     # exception when value not between 1 and 9
+                if turn == player1:
+                    theBoard[indexes[pos]] = player1
+                    turn = player2
+                    printBoard()
                     break
-        else:
-            print("That's not a position.")
+                else:
+                    theBoard[indexes[pos]] = player2
+                    turn = player1
+                    printBoard()
+                    break
+            else:
+                print('Position not Empty.')
+                break
+            break
+print('\n GAME HAS ENDED!!')
