@@ -63,16 +63,12 @@ for i in range(9):
         if pos > 1 or pos < 9:
             try:
                 if not checkPosition(indexes[pos]):
+                    theBoard[indexes[pos]] = turn
                     if turn == player1:
-                        theBoard[indexes[pos]] = player1
                         turn = player2
-                        printBoard()
-                        break
                     else:
-                        theBoard[indexes[pos]] = player2
                         turn = player1
-                        printBoard()
-                        break
+                    printBoard()
                 else:
                     print('Position not Empty.')
                     break
