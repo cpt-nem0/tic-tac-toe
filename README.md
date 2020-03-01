@@ -1,3 +1,2 @@
 # Tic Tac Toe
-
-Basic 2-player Tic-Tac-Toe game.
+Basic CLI based 2 - Player Tic Tac Toe game.
