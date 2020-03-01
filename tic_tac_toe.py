@@ -56,7 +56,8 @@ indexes = {7: 'top-L', 8: 'top-M', 9: 'top-R',
            1: 'low-L', 2: 'low-M', 3: 'low-R'}
 
 turn = player1
-for i in range(9):
+i = 0
+while i < 9:
     print(f'Player "{turn}" turn, enter your position: ')
     pos = int(input('> '))
     while True:
@@ -69,10 +70,11 @@ for i in range(9):
                     else:
                         turn = player1
                     printBoard()
+                    i += 1
+                    break
                 else:
                     print('Position not Empty.')
                     break
-                break
             except KeyError:
                 print('Pos must be between 1-9.')
                 break
