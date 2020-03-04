@@ -1,28 +1,26 @@
-def playerInput():
-    while True:
-        player = input(' Player1 select from "X" or "O" to play: ').upper()
-        if player == 'X' or player == 'O':
-            break
-    if player == 'X':
-        player1 = 'X'
-        player2 = 'O'
-        print('\n Player2 you have given: "O".\n')
-    else:
-        player1 = 'O'
-        player2 = 'X'
-        print('\n Player2 you have given: "X".\n')
+from IPython.display import clear_output
+from random import randint
 
-    return player1, player2
+
+def playerInput():
+    player = ''
+    while not (player == 'X' or player == 'O'):
+        player = input('Player 1 choose either "X" or "O": ').upper()
+    if player == 'X':
+        return ('X', 'O')
+    else:
+        return ('O', 'X')
 
 
 def printBoard():
+    clear_output()  # to clear the previous output
     print(
         f'''
-        {theBoard['top-L']}|{theBoard['top-M']}|{theBoard['top-R']}
+        {theBoard[7]}|{theBoard[8]}|{theBoard[9]}
         -+-+-
-        {theBoard['mid-L']}|{theBoard['mid-M']}|{theBoard['mid-R']}
+        {theBoard[4]}|{theBoard[5]}|{theBoard[6]}
         -+-+-
-        {theBoard['low-L']}|{theBoard['low-M']}|{theBoard['low-R']}
+        {theBoard[1]}|{theBoard[2]}|{theBoard[3]}
         '''
     )
 
@@ -39,48 +37,102 @@ def boardStructure():       # structure 'coz of keypad layout
 
 
 def checkPosition(position):
-    if theBoard[position] == 'X' or theBoard[position] == 'O':
+    return theBoard[position] == ' '
+
+
+def checkInput(position):
+    return position >= 1 or position <= 9
+
+
+def placePlayer(position, player):
+    theBoard[position] = player
+
+
+def checkWin(player):
+    if (theBoard[1] == theBoard[2] == theBoard[3] == player) or \
+        (theBoard[4] == theBoard[5] == theBoard[6] == player) or \
+        (theBoard[7] == theBoard[8] == theBoard[9] == player) or \
+        (theBoard[1] == theBoard[4] == theBoard[7] == player) or \
+        (theBoard[2] == theBoard[5] == theBoard[8] == player) or \
+        (theBoard[3] == theBoard[6] == theBoard[9] == player) or \
+        (theBoard[1] == theBoard[5] == theBoard[9] == player) or \
+        (theBoard[3] == theBoard[5] == theBoard[7] == player):
         return True
     else:
         return False
 
 
-def checkWin():
-    pass
+def choosePlayer(p1, p2):
+    player = randint(1, 2)
+    if player == 1:
+        return p1
+    else:
+        return p2
+
+
+def checkBoard():
+    for i in range(9):
+        if checkPosition(i):
+            return False
+    return True
+
+
+def replay():
+    response = input('play again? "Yes" or "No": ').lower()
+    return response == 'yes'
+
+
+def resetBoard():
+    for i in range(1, 10):
+        theBoard[i] = ' '
 
 
 boardStructure()    # board structure for instructions
 player1, player2 = playerInput()
-print("\n LET'S BEGIN!! \n")
 
-theBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
-            'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ',
-            'low-L': ' ', 'low-M': ' ', 'low-R': ' '}
-indexes = {7: 'top-L', 8: 'top-M', 9: 'top-R',
-           4: 'mid-L', 5: 'mid-M', 6: 'mid-R',
-           1: 'low-L', 2: 'low-M', 3: 'low-R'}
+theBoard = {7: ' ', 8: ' ', 9: ' ',
+            4: ' ', 5: ' ', 6: ' ',
+            1: ' ', 2: ' ', 3: ' '}
 
-turn = player1
+turn = choosePlayer(player1, player2)
 i = 0
-while i < 9:
-    print(f'Player "{turn}" turn, enter your position: ')
-    pos = int(input('> '))
-    while True:
-        if pos > 1 or pos < 9:
+while True:
+    while i < 9:
+        if turn == player1:
+            print(f'Player 1 your turn, input Position for "{player1}": ')
+            pos = int(input('> '))
+        else:
+            print(f'Player 2 your turn, input Position for "{player2}": ')
+            pos = int(input('> '))
+        while True:
             try:
-                if not checkPosition(indexes[pos]):
-                    theBoard[indexes[pos]] = turn
-                    if turn == player1:
-                        turn = player2
+                if checkInput(pos):
+                    if checkPosition(pos):
+                        placePlayer(pos, turn)
+
+                        if checkWin(turn):
+                            printBoard()
+                            print(f'player {turn} wins')
+                            break
+
+                        if turn == player1:
+                            turn = player2
+                        else:
+                            turn = player1
+                        printBoard()
+                        i += 1
+                        break
                     else:
-                        turn = player1
-                    printBoard()
-                    i += 1
-                    break
-                else:
-                    print('\n Position not Empty.\n')
-                    break
+                        print('Position already taken.')
+                        break
             except KeyError:
-                print('\n Pos must be between 1-9. \n')
+                print('Positon must be between 1-9.')
                 break
-print('\n GAME HAS ENDED!!')
+
+    if replay():
+        i = 0
+        resetBoard()
+
+    else:
+        break
+print("Game Ended !!")
