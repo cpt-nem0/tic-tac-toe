@@ -113,7 +113,9 @@ while True:
                         if checkWin(turn):
                             printBoard()
                             print(f'player {turn} wins')
-                            break
+                            if replay():
+                                i=0
+                                resetBoard()
 
                         if turn == player1:
                             turn = player2
@@ -129,6 +131,8 @@ while True:
                 print('Positon must be between 1-9.')
                 break
 
+    if i == 9 and not checkWin(turn):
+        print("It's a draw !!")
     if replay():
         i = 0
         resetBoard()
