@@ -56,7 +56,7 @@ def checkWin(player):
         (theBoard[2] == theBoard[5] == theBoard[8] == player) or \
         (theBoard[3] == theBoard[6] == theBoard[9] == player) or \
         (theBoard[1] == theBoard[5] == theBoard[9] == player) or \
-        (theBoard[3] == theBoard[5] == theBoard[7] == player):
+            (theBoard[3] == theBoard[5] == theBoard[7] == player):
         return True
     else:
         return False
@@ -99,11 +99,9 @@ i = 0
 while True:
     while i < 9:
         if turn == player1:
-            print(f'Player 1 your turn, input Position for "{player1}": ')
-            pos = int(input('> '))
+            pos = int(input(f'{player1}> '))
         else:
-            print(f'Player 2 your turn, input Position for "{player2}": ')
-            pos = int(input('> '))
+            pos = int(input(f'{player2}> '))
         while True:
             try:
                 if checkInput(pos):
@@ -114,7 +112,7 @@ while True:
                             printBoard()
                             print(f'player {turn} wins')
                             if replay():
-                                i=0
+                                i = 0
                                 resetBoard()
 
                         if turn == player1:
